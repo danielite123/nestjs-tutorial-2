@@ -42,4 +42,21 @@ export class PostsService {
       where: { id: postId },
     });
   }
+
+  async updatePostById(
+    postId: number,
+    userId: number,
+    data: Prisma.PostUpdateInput,
+  ) {
+    const post = await this.prisma.post.findUnique({
+      where: { id: postId },
+    });
+
+    if (!post) throw new HttpException('Post does not exist', 404);
+
+    if (post.userId != userId)
+      throw new HttpException('You are not authorized to delete post', 403);
+
+    return this.prisma.post.update({ where: { id: postId }, data });
+  }
 }
