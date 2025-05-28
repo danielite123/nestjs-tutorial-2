@@ -20,6 +20,16 @@ export class UsersService {
     });
   }
 
+  async deleteUserById(id: number) {
+    const findUser = await this.getUserById(id);
+
+    if (!findUser) throw new HttpException('User Not Found', 404);
+
+    return this.prisma.user.delete({
+      where: { id },
+    });
+  }
+
   async updateUserById(id: number, data: Prisma.UserUpdateInput) {
     const findUser = await this.getUserById(id);
 
