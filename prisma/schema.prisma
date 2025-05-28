@@ -18,6 +18,7 @@ model User {
   username String @unique
   displayname String? @default("")
   userSetting UserSettings?
+  posts Post[]
 }
 
 model UserSettings {
@@ -32,4 +33,6 @@ model Post {
   id Int @default(autoincrement()) @id
   title String
   description String
+  user User @relation(fields: [userId], references: [id])
+  userId Int
 }
