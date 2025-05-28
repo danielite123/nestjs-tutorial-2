@@ -15,10 +15,14 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dtos/CreateUser.dto';
 import { UpdateUserDto } from './dtos/UpdateUser.dto';
 import { updateUserSettingsDto } from './dtos/UpdateUserSetting.dto';
+import { PostsService } from 'src/posts/posts.service';
 
 @Controller('users')
 export class UsersController {
-  constructor(private usersService: UsersService) {}
+  constructor(
+    private usersService: UsersService,
+    private postService: PostsService,
+  ) {}
 
   @Post()
   @UsePipes(ValidationPipe)
@@ -59,5 +63,10 @@ export class UsersController {
     @Body() updateUserSettingsDto: updateUserSettingsDto,
   ) {
     return this.usersService.updateUserSettings(id, updateUserSettingsDto);
+  }
+
+  @Get(':id/posts')
+  getUserPostsById(@Param('id', ParseIntPipe) id: number) {
+    return this.postService.getUserPostsById(id);
   }
 }

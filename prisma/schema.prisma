@@ -21,6 +21,7 @@ model User {
   posts Post[]
 }
 
+
 model UserSettings {
   id Int @default(autoincrement()) @id
   notificationsOn Boolean

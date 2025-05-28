@@ -1,6 +1,10 @@
 import {
   Body,
   Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
   Post,
   UsePipes,
   ValidationPipe,
@@ -26,5 +30,23 @@ export class PostsController {
     };
 
     return this.postService.createPost(data);
+  }
+
+  @Get()
+  getAllPosts() {
+    return this.postService.getAllPosts();
+  }
+
+  @Get(':id')
+  getPostById(@Param('id', ParseIntPipe) id: number) {
+    return this.postService.getPostById(id);
+  }
+
+  @Delete(':postId/user/:userId')
+  deletePostById(
+    @Param('postId', ParseIntPipe) postId: number,
+    @Param('userId', ParseIntPipe) userId: number,
+  ) {
+    return this.postService.deletePostsById(postId, userId);
   }
 }
